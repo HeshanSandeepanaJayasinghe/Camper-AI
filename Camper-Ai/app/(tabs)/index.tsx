@@ -1,98 +1,84 @@
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
+import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { sampleLocations } from '@/components/sample-locations';
 
-export default function HomeScreen() {
+export default function MapScreen() {
+  const router = useRouter();
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <AppShell title="Map">
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.mapPlaceholder}>
+          <ThemedText type="subtitle" style={styles.mapText}>
+            Camper-AI Map Preview
+          </ThemedText>
+          <ThemedText style={styles.mapNote}>
+            Tap a campsite card below to view details and prepare for your trip.
+          </ThemedText>
+        </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        {sampleLocations.map((location) => (
+          <Pressable
+            key={location.id}
+            style={styles.locationCard}
+            onPress={() => router.push(`/info?location=${location.id}` as unknown as any)}>
+            <Image source={{ uri: location.images[0] }} style={styles.locationImage} contentFit="cover" />
+            <View style={styles.locationContent}>
+              <ThemedText type="subtitle">{location.name}</ThemedText>
+              <ThemedText style={styles.locationSubtitle}>{location.subtitle}</ThemedText>
+              <ThemedText style={styles.locationMeta}>{location.coords}</ThemedText>
+            </View>
+          </Pressable>
+        ))}
+      </ScrollView>
+    </AppShell>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  container: {
+    paddingBottom: 40,
+    gap: 16,
+  },
+  mapPlaceholder: {
+    minHeight: 180,
+    backgroundColor: '#e8f2f7',
+    borderRadius: 18,
+    padding: 18,
+    justifyContent: 'center',
+    gap: 12,
+  },
+  mapText: {
+    fontWeight: '700',
+  },
+  mapNote: {
+    color: '#4d6672',
+  },
+  locationCard: {
+    borderRadius: 18,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#e6ebef',
+    backgroundColor: '#fff',
+  },
+  locationImage: {
+    width: '100%',
+    height: 150,
+  },
+  locationContent: {
+    padding: 14,
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  locationSubtitle: {
+    color: '#5f6d76',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  locationMeta: {
+    color: '#7d8a92',
+    fontSize: 14,
   },
 });

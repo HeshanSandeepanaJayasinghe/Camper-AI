@@ -9,24 +9,30 @@ export default function GuideScreen() {
     <AppShell title="Guide">
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedText type="title" style={styles.sectionTitle}>
-          Camping Guide
+          Camper-AI Survival Guide
         </ThemedText>
         <View style={styles.card}>
-          <ThemedText type="subtitle">Packing</ThemedText>
+          <ThemedText type="subtitle">Stay hydrated</ThemedText>
           <ThemedText style={styles.paragraph}>
-            Pack layers, a headlamp, waterproof shoes, and a compact first-aid kit. Make sure your pack is not too heavy.
+            Bring at least two liters of water per person and a second container for filtered water from streams.
           </ThemedText>
         </View>
         <View style={styles.card}>
-          <ThemedText type="subtitle">Food</ThemedText>
+          <ThemedText type="subtitle">Dress in layers</ThemedText>
           <ThemedText style={styles.paragraph}>
-            Choose easy meals, snacks, and water. Keep food sealed and store it away from wildlife if required.
+            Early mornings and nights can be cold even after a warm day. Carry a lightweight jacket and moisture-wicking layers.
           </ThemedText>
         </View>
         <View style={styles.card}>
-          <ThemedText type="subtitle">Safety</ThemedText>
+          <ThemedText type="subtitle">Know your route</ThemedText>
           <ThemedText style={styles.paragraph}>
-            Know your emergency exits, carry a charged phone, and check the weather before you go.
+            Plan your route ahead, mark key landmarks, and keep your phone charged if you plan to use GPS or maps.
+          </ThemedText>
+        </View>
+        <View style={styles.card}>
+          <ThemedText type="subtitle">Leave no trace</ThemedText>
+          <ThemedText style={styles.paragraph}>
+            Pack out all trash, keep noise levels low, and respect wildlife to preserve the site for future campers.
           </ThemedText>
         </View>
       </ScrollView>

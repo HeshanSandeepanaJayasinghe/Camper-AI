@@ -3,7 +3,6 @@ import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 
 const initialMessages = [
   { from: 'assistant', text: 'Hello! How can Camper-AI help you prepare today?' },

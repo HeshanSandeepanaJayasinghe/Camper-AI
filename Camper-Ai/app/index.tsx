@@ -22,7 +22,7 @@ export default function WelcomeScreen() {
         {loading ? (
           <View style={styles.loadingContainer}>
             <Image
-              source={require('@/assets/loading/loading.png')}
+              source={require('@/assets/loading/loarding.webp')}
               style={styles.loadingImage}
               contentFit="contain"
             />

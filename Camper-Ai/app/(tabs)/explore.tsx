@@ -2,7 +2,6 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 
 export default function GuideScreen() {
   return (

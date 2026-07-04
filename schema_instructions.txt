@@ -1,0 +1,80 @@
+Camper-AI Supabase Database Schema Instructions
+=================================================
+
+To make the user profile CRUD operations and authentication work correctly, you need to execute the following SQL script in your Supabase project.
+
+Go to your Supabase Dashboard:
+1. Select your project.
+2. Click on "SQL Editor" in the left navigation sidebar.
+3. Click "New Query" and paste the following SQL code.
+4. Click "Run".
+
+--------------------------------------------------
+SQL SCRIPT FOR CREATING TABLES & POLICIES
+--------------------------------------------------
+
+-- 1. Create the profiles table that links to Auth users
+create table public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  name text,
+  email text,
+  emergency_contact text,
+  bio text,
+  theme text default 'dark',
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable Row Level Security (RLS) on profiles
+alter table public.profiles enable row level security;
+
+-- 2. Create RLS Policies
+
+-- Allow users to select their own profile
+create policy "Users can view own profile"
+  on public.profiles for select
+  using ( auth.uid() = id );
+
+-- Allow users to update their own profile
+create policy "Users can update own profile"
+  on public.profiles for update
+  using ( auth.uid() = id );
+
+-- Allow users to insert their own profile
+create policy "Users can insert own profile"
+  on public.profiles for insert
+  with check ( auth.uid() = id );
+
+-- Allow users to delete their own profile
+create policy "Users can delete own profile"
+  on public.profiles for delete
+  using ( auth.uid() = id );
+
+-- 3. Automatic Profile Creation Trigger
+-- This function automatically inserts a row into the profiles table when a new user signs up.
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, name, email, theme)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'name', 'Camper User'),
+    new.email,
+    'dark'
+  );
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- Create trigger to execute the function on auth signups
+create or replace trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
+-- 4. Secure Account Deletion Function
+-- This function allows users to delete their own auth record from the client-side.
+create or replace function public.delete_user_account()
+returns void as $$
+begin
+  delete from auth.users where id = auth.uid();
+end;
+$$ language plpgsql security definer;

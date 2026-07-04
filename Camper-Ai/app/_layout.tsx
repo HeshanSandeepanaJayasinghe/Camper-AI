@@ -3,24 +3,59 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { AppProvider } from '@/components/AppContext';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AppProvider, useAppContext } from '@/components/AppContext';
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+function RootLayoutContent() {
+  const { theme } = useAppContext();
+
+  // Create custom react-navigation themes matching our constants
+  const customDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: '#0d0f12',
+      card: '#151922',
+      text: '#f8fafc',
+      border: '#222b3c',
+    },
+  };
+
+  const customLightTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#f8fafc',
+      card: '#ffffff',
+      text: '#0f172a',
+      border: '#e2e8f0',
+    },
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AppProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-          <Stack.Screen name="register" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-        </Stack>
-      </AppProvider>
-      <StatusBar style="auto" />
+    <ThemeProvider value={theme === 'dark' ? customDarkTheme : customLightTheme}>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        
+        {/* Additional Stack Screens */}
+        <Stack.Screen name="guide" options={{ title: 'Survival Guide', headerShown: true }} />
+        <Stack.Screen name="compass" options={{ title: 'Compass', headerShown: true }} />
+        <Stack.Screen name="weather" options={{ title: 'Weather Report', headerShown: true }} />
+        <Stack.Screen name="sos" options={{ title: 'SOS Emergency', headerShown: true }} />
+        <Stack.Screen name="breadcrumb" options={{ title: 'Breadcrumb Tracking', headerShown: true }} />
+        <Stack.Screen name="prep-chat" options={{ title: 'Trip Preparation', headerShown: true }} />
+      </Stack>
+      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
     </ThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AppProvider>
+      <RootLayoutContent />
+    </AppProvider>
   );
 }

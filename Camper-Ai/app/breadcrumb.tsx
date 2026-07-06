@@ -5,18 +5,9 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { MapView, Marker, Polyline } from '@/components/maps';
 import { Colors } from '@/constants/theme';
 import { useAppContext } from '@/components/AppContext';
-
-let MapView: any;
-let Polyline: any;
-let Marker: any;
-if (Platform.OS !== 'web') {
-  const Maps = eval('require')('react-native-maps');
-  MapView = Maps.default;
-  Polyline = Maps.Polyline;
-  Marker = Maps.Marker;
-}
 
 type Point = {
   latitude: number;

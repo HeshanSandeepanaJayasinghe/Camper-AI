@@ -10,6 +10,18 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
+        name="explore"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="guide"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: 'Map',

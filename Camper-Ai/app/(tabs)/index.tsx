@@ -6,20 +6,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
+import { MapView, Marker, Callout } from '@/components/maps';
 import { sampleLocations } from '@/components/sample-locations';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
-
-// Import react-native-maps conditionally for web compatibility.
-let MapView: any;
-let Marker: any;
-let Callout: any;
-if (Platform.OS !== 'web') {
-  const Maps = eval('require')('react-native-maps');
-  MapView = Maps.default;
-  Marker = Maps.Marker;
-  Callout = Maps.Callout;
-}
 
 const { height } = Dimensions.get('window');
 
@@ -212,7 +202,6 @@ const styles = StyleSheet.create({
   carouselWrapper: {
     marginVertical: 16,
     height: 120,
-    marginBottom: 90, // Leave space for bottom tab bar
   },
   carouselContainer: {
     gap: 12,

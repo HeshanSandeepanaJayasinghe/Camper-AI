@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedView } from '@/components/themed-view';
+import { TAB_BAR_HEIGHT } from '@/constants/layout';
 
 type AppShellProps = {
   title?: string;
@@ -9,10 +10,12 @@ type AppShellProps = {
 };
 
 export function AppShell({ children }: AppShellProps) {
+  const insets = useSafeAreaInsets();
+
   return (
     <ThemedView style={styles.root}>
       <SafeAreaView edges={['top', 'left', 'right']} style={styles.content}>
-        {children}
+        <View style={{ flex: 1, paddingBottom: TAB_BAR_HEIGHT + insets.bottom + 8 }}>{children}</View>
       </SafeAreaView>
     </ThemedView>
   );

@@ -6,12 +6,13 @@ import {
   StyleSheet,
   Animated,
   Dimensions,
-  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
+import { TAB_BAR_HEIGHT } from '@/constants/layout';
 
 const { width } = Dimensions.get('window');
 
@@ -25,6 +26,8 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
   const router = useRouter();
   const { theme } = useAppContext();
   const activeColors = Colors[theme];
+  const insets = useSafeAreaInsets();
+  const tabBarHeight = TAB_BAR_HEIGHT + insets.bottom;
   const [expanded, setExpanded] = useState(false);
   const animValue = useRef(new Animated.Value(0)).current;
 
@@ -118,6 +121,7 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
             {
               backgroundColor: activeColors.card,
               borderColor: activeColors.border,
+              bottom: tabBarHeight + 12,
               transform: [{ translateY: menuTranslateY }, { scale: menuScale }],
             },
           ]}
@@ -148,6 +152,8 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
             backgroundColor: activeColors.card,
             borderTopColor: activeColors.border,
             shadowColor: theme === 'dark' ? '#000' : '#475569',
+            height: tabBarHeight,
+            paddingBottom: insets.bottom,
           },
         ]}
       >
@@ -232,7 +238,6 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     position: 'absolute',
-    bottom: 95,
     alignSelf: 'center',
     width: width * 0.9,
     borderRadius: 24,
@@ -280,10 +285,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
-    height: 75,
     width: '100%',
     borderTopWidth: 1,
-    paddingBottom: Platform.OS === 'ios' ? 15 : 0,
     alignItems: 'center',
     justifyContent: 'space-around',
     zIndex: 101,

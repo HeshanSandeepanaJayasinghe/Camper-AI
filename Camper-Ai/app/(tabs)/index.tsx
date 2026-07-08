@@ -124,8 +124,8 @@ export default function MapScreen() {
                 pinColor={activeColors.tint}
                 onCalloutPress={() => handleCardPress(loc.id)}
               >
-                <Callout tooltip>
-                  <View style={[styles.calloutBubble, { backgroundColor: activeColors.card, borderColor: activeColors.border }]}>
+                <Callout tooltip onPress={Platform.OS === 'ios' ? () => handleCardPress(loc.id) : undefined}>
+                  <View pointerEvents="none" style={[styles.calloutBubble, { backgroundColor: activeColors.card, borderColor: activeColors.border }]}>
                     <ThemedText style={[styles.calloutTitle, { color: activeColors.text }]}>{loc.name}</ThemedText>
                     <ThemedText style={[styles.calloutSubtitle, { color: activeColors.mutedText }]}>{loc.subtitle}</ThemedText>
                     <View style={styles.calloutButton}>

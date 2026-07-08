@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Pressable, ScrollView, Platform, Dimensions, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
@@ -10,13 +12,53 @@ import { MapView, Marker, Callout, PROVIDER_GOOGLE } from '@/components/maps';
 import { sampleLocations } from '@/components/sample-locations';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
+import { OnboardingTour } from '@/components/OnboardingTour';
 
 const { height } = Dimensions.get('window');
 
 export default function MapScreen() {
   const router = useRouter();
-  const { theme } = useAppContext();
+  const { theme, user } = useAppContext();
   const activeColors = Colors[theme];
+  const isFocused = useIsFocused();
+  const [tourVisible, setTourVisible] = useState(false);
+  const [sessionTourShown, setSessionTourShown] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      setSessionTourShown(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (isFocused && user) {
+      const checkTour = async () => {
+        try {
+          const forceShow = await AsyncStorage.getItem('force_show_onboarding_tour');
+          if (forceShow === 'true') {
+            await AsyncStorage.removeItem('force_show_onboarding_tour');
+            setTourVisible(true);
+            return;
+          }
+
+          if (user.id === 'guest') {
+            if (!sessionTourShown) {
+              setTourVisible(true);
+              setSessionTourShown(true);
+            }
+          } else {
+            const hasSeen = await AsyncStorage.getItem('has_seen_onboarding_tour');
+            if (hasSeen !== 'true') {
+              setTourVisible(true);
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      checkTour();
+    }
+  }, [isFocused, user, sessionTourShown]);
 
   // Sri Lanka Central coordinates
   const initialRegion = {
@@ -133,6 +175,7 @@ export default function MapScreen() {
           ))}
         </ScrollView>
       </View>
+      <OnboardingTour visible={tourVisible} onClose={() => setTourVisible(false)} />
     </AppShell>
   );
 }

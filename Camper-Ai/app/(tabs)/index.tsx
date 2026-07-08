@@ -6,7 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
-import { MapView, Marker, Callout } from '@/components/maps';
+import { MapView, Marker, Callout, PROVIDER_GOOGLE } from '@/components/maps';
 import { sampleLocations } from '@/components/sample-locations';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
@@ -68,6 +68,7 @@ export default function MapScreen() {
         ) : (
           // Mobile Native Map
           <MapView
+            provider={PROVIDER_GOOGLE}
             style={styles.map}
             initialRegion={initialRegion}
             customMapStyle={theme === 'dark' ? darkMapStyle : undefined}

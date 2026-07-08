@@ -34,13 +34,14 @@ function RootLayoutContent() {
 
   return (
     <ThemeProvider value={theme === 'dark' ? customDarkTheme : customLightTheme}>
-      <Stack>
+      <Stack screenOptions={{ headerBackTitle: 'Back' }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         
         {/* Additional Stack Screens */}
+        <Stack.Screen name="info" options={{ headerShown: false }} />
         <Stack.Screen name="guide" options={{ title: 'Survival Guide', headerShown: true }} />
         <Stack.Screen name="compass" options={{ title: 'Compass', headerShown: true }} />
         <Stack.Screen name="weather" options={{ title: 'Weather Report', headerShown: true }} />

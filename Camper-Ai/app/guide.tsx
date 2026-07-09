@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import { askGemini } from '@/components/gemini';
+import { askGeminiChat } from '@/components/gemini';
 import { ThemedText } from '@/components/themed-text';
+import { FormattedText } from '@/components/FormattedText';
 import { ThemedView } from '@/components/themed-view';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
@@ -35,9 +36,8 @@ export default function GuideScreen() {
     setMessages(nextMessages);
     setDraft('');
     setLoading(true);
-    const transcript = nextMessages.map((message) => `${message.from}: ${message.text}`).join('\n');
-    const answer = await askGemini(
-      transcript,
+    const answer = await askGeminiChat(
+      nextMessages,
       'You are Camper-AI Survival Guide. Give practical, conservative outdoor safety advice for Sri Lankan camping and hiking. Keep answers concise, actionable, and include emergency caution where relevant.',
     );
     setMessages((current) => [...current, { from: 'assistant', text: answer }]);
@@ -81,7 +81,7 @@ export default function GuideScreen() {
                 { backgroundColor: message.from === 'user' ? colors.tint : theme === 'dark' ? '#1c2230' : '#f1f5f9' },
               ]}
             >
-              <ThemedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</ThemedText>
+              <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
             </View>
           ))}
           {loading && <ActivityIndicator color={colors.tint} />}
@@ -91,6 +91,7 @@ export default function GuideScreen() {
               onChangeText={setDraft}
               placeholder="Ask a survival question..."
               placeholderTextColor={colors.tabIconDefault}
+              multiline
               style={[styles.askInput, { color: colors.text }]}
             />
             <Pressable style={[styles.iconButton, { backgroundColor: colors.tint }]} onPress={askGuide}>
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   tipText: { flex: 1, lineHeight: 21 },
   chatPanel: { borderWidth: 1, borderRadius: 20, padding: 16, gap: 12 },
   message: { alignSelf: 'flex-start', maxWidth: '92%', borderRadius: 14, padding: 12 },
-  askBar: { flexDirection: 'row', borderWidth: 1, borderRadius: 16, padding: 8, gap: 8, alignItems: 'center' },
-  askInput: { flex: 1, paddingHorizontal: 8, paddingVertical: 8 },
+  askBar: { flexDirection: 'row', borderWidth: 1, borderRadius: 16, padding: 8, gap: 8, alignItems: 'flex-end' },
+  askInput: { flex: 1, minHeight: 38, maxHeight: 100, paddingHorizontal: 8, paddingVertical: 8 },
   iconButton: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
 });

@@ -12,9 +12,10 @@ import {
 import { useLocalSearchParams } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import { askGemini } from '@/components/gemini';
+import { askGeminiChat } from '@/components/gemini';
 import { sampleLocations } from '@/components/sample-locations';
 import { ThemedText } from '@/components/themed-text';
+import { FormattedText } from '@/components/FormattedText';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useAppContext } from '@/components/AppContext';
@@ -57,56 +58,57 @@ export default function PrepChatScreen() {
     setDraft('');
     setLoading(true);
 
-    const transcript = nextMessages.map((message) => `${message.from}: ${message.text}`).join('\n');
-    const answer = await askGemini(transcript, systemInstruction);
+    const answer = await askGeminiChat(nextMessages, systemInstruction);
     setMessages((current) => [...current, { from: 'assistant', text: answer }]);
     setLoading(false);
   };
 
   return (
-    <ThemedView style={[styles.root, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <ThemedText type="title" style={[styles.title, { color: colors.text }]}>Trip Preparation</ThemedText>
-        <ThemedText style={[styles.subtitle, { color: colors.mutedText }]}>
-          {locationData?.name ?? 'Build a safer camping plan'}
-        </ThemedText>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+      keyboardVerticalOffset={Platform.select({ ios: 90, android: 120 })}
+      style={{ flex: 1 }}
+    >
+      <ThemedView style={[styles.root, { backgroundColor: colors.background }]}>
+        <View style={styles.header}>
+          <ThemedText type="title" style={[styles.title, { color: colors.text }]}>Trip Preparation</ThemedText>
+          <ThemedText style={[styles.subtitle, { color: colors.mutedText }]}>
+            {locationData?.name ?? 'Build a safer camping plan'}
+          </ThemedText>
+        </View>
 
-      <ScrollView style={styles.messages} contentContainerStyle={styles.messageContent}>
-        {messages.map((message, index) => (
-          <View
-            key={`${message.from}-${index}`}
-            style={[
-              styles.bubble,
-              message.from === 'user'
-                ? [styles.userBubble, { backgroundColor: colors.tint }]
-                : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border }],
-            ]}
-          >
-            <ThemedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</ThemedText>
-          </View>
-        ))}
-        {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
-      </ScrollView>
+        <ScrollView style={styles.messages} contentContainerStyle={styles.messageContent}>
+          {messages.map((message, index) => (
+            <View
+              key={`${message.from}-${index}`}
+              style={[
+                styles.bubble,
+                message.from === 'user'
+                  ? [styles.userBubble, { backgroundColor: colors.tint }]
+                  : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border }],
+              ]}
+            >
+              <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
+            </View>
+          ))}
+          {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
+        </ScrollView>
 
-      <KeyboardAvoidingView
-        behavior={Platform.select({ ios: 'padding', android: undefined })}
-        keyboardVerticalOffset={Platform.select({ ios: 90, android: 0 })}
-        style={[styles.inputBar, { borderColor: colors.border, backgroundColor: colors.card }]}
-      >
-        <TextInput
-          value={draft}
-          onChangeText={setDraft}
-          placeholder="Trip date, group size, gear..."
-          placeholderTextColor={colors.tabIconDefault}
-          multiline
-          style={[styles.input, { color: colors.text }]}
-        />
-        <Pressable style={[styles.sendButton, { backgroundColor: colors.tint }]} onPress={sendMessage}>
-          <MaterialIcons name="send" size={20} color="#031014" />
-        </Pressable>
-      </KeyboardAvoidingView>
-    </ThemedView>
+        <View style={[styles.inputBar, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <TextInput
+            value={draft}
+            onChangeText={setDraft}
+            placeholder="Trip date, group size, gear..."
+            placeholderTextColor={colors.tabIconDefault}
+            multiline
+            style={[styles.input, { color: colors.text }]}
+          />
+          <Pressable style={[styles.sendButton, { backgroundColor: colors.tint }]} onPress={sendMessage}>
+            <MaterialIcons name="send" size={20} color="#031014" />
+          </Pressable>
+        </View>
+      </ThemedView>
+    </KeyboardAvoidingView>
   );
 }
 

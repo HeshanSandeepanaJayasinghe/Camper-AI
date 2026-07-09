@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
@@ -11,10 +13,33 @@ import { Colors } from '@/constants/theme';
 export default function ProfileScreen() {
   const { user, favorites, updateProfile, deleteAccount, signOut, theme } = useAppContext();
   const colors = Colors[theme];
+  const router = useRouter();
   const [name, setName] = useState(user?.name ?? '');
   const [bio, setBio] = useState(user?.bio ?? '');
   const [emergencyContact, setEmergencyContact] = useState(user?.emergency_contact ?? '');
   const [saving, setSaving] = useState(false);
+
+  const handleReplayTour = () => {
+    Alert.alert(
+      'Start App Tour?',
+      'This will restart the onboarding guide. You will be redirected to the Map screen.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Start',
+          onPress: async () => {
+            try {
+              await AsyncStorage.setItem('force_show_onboarding_tour', 'true');
+              await AsyncStorage.removeItem('has_seen_onboarding_tour');
+              router.replace('/(tabs)');
+            } catch (e) {
+              console.error(e);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   useEffect(() => {
     setName(user?.name ?? '');
@@ -97,6 +122,17 @@ export default function ProfileScreen() {
               </View>
             ))
           )}
+        </View>
+
+        <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <ThemedText type="subtitle" style={{ color: colors.text }}>Help & Guidance</ThemedText>
+          <Pressable
+            style={[styles.outlineButton, { borderColor: colors.border, marginTop: 4 }]}
+            onPress={handleReplayTour}
+          >
+            <MaterialIcons name="help-outline" size={20} color={colors.tint} />
+            <ThemedText style={{ color: colors.text, fontWeight: '800' }}>Start Tour Guide</ThemedText>
+          </Pressable>
         </View>
 
         <View style={styles.dangerRow}>

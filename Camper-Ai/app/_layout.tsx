@@ -32,21 +32,33 @@ function RootLayoutContent() {
     },
   };
 
+  const headerOptions = {
+    headerBackTitle: 'Back',
+    headerStyle: {
+      backgroundColor: theme === 'dark' ? '#151922' : '#ffffff',
+    },
+    headerTintColor: theme === 'dark' ? '#f8fafc' : '#0f172a',
+    headerTitleStyle: {
+      color: theme === 'dark' ? '#f8fafc' : '#0f172a',
+    },
+  };
+
   return (
     <ThemeProvider value={theme === 'dark' ? customDarkTheme : customLightTheme}>
-      <Stack>
+      <Stack screenOptions={headerOptions}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         
         {/* Additional Stack Screens */}
-        <Stack.Screen name="guide" options={{ title: 'Survival Guide', headerShown: true }} />
-        <Stack.Screen name="compass" options={{ title: 'Compass', headerShown: true }} />
-        <Stack.Screen name="weather" options={{ title: 'Weather Report', headerShown: true }} />
-        <Stack.Screen name="sos" options={{ title: 'SOS Emergency', headerShown: true }} />
-        <Stack.Screen name="breadcrumb" options={{ title: 'Breadcrumb Tracking', headerShown: true }} />
-        <Stack.Screen name="prep-chat" options={{ title: 'Trip Preparation', headerShown: true }} />
+        <Stack.Screen name="info" options={{ headerShown: false }} />
+        <Stack.Screen name="guide" options={{ title: 'Survival Guide', headerShown: true, ...headerOptions }} />
+        <Stack.Screen name="compass" options={{ title: 'Compass', headerShown: true, ...headerOptions }} />
+        <Stack.Screen name="weather" options={{ title: 'Weather Report', headerShown: true, ...headerOptions }} />
+        <Stack.Screen name="sos" options={{ title: 'SOS Emergency', headerShown: true, ...headerOptions }} />
+        <Stack.Screen name="breadcrumb" options={{ title: 'Breadcrumb Tracking', headerShown: true, ...headerOptions }} />
+        <Stack.Screen name="prep-chat" options={{ title: 'Trip Preparation', headerShown: true, ...headerOptions }} />
       </Stack>
       <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
     </ThemeProvider>

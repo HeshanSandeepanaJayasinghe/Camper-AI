@@ -104,6 +104,12 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
     { label: 'SOS Emergency', icon: 'warning', route: '/sos', color: '#ef4444' },
   ];
 
+  // Find index offsets dynamically to handle hidden/disabled tabs in route state
+  const mapIndex = state.routes.findIndex((r: any) => r.name === 'index');
+  const chatIndex = state.routes.findIndex((r: any) => r.name === 'chat');
+  const settingIndex = state.routes.findIndex((r: any) => r.name === 'setting');
+  const profileIndex = state.routes.findIndex((r: any) => r.name === 'profile');
+
   return (
     <>
       {/* Backdrop overlay for dismissing menu */}
@@ -160,25 +166,31 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         {/* Tab 1: Map */}
         <Pressable
           style={styles.tabButton}
-          onPress={() => handleTabPress(0, 'index', state.index === 0)}
+          onPress={() => handleTabPress(mapIndex, 'index', state.index === mapIndex)}
         >
           <MaterialIcons
             name="map"
-            size={26}
-            color={state.index === 0 ? activeColors.tint : activeColors.tabIconDefault}
+            size={23}
+            color={state.index === mapIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === mapIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Map
+          </Text>
         </Pressable>
 
         {/* Tab 2: Chat */}
         <Pressable
           style={styles.tabButton}
-          onPress={() => handleTabPress(1, 'chat', state.index === 1)}
+          onPress={() => handleTabPress(chatIndex, 'chat', state.index === chatIndex)}
         >
           <MaterialIcons
             name="chat-bubble-outline"
-            size={26}
-            color={state.index === 1 ? activeColors.tint : activeColors.tabIconDefault}
+            size={23}
+            color={state.index === chatIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === chatIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Chat
+          </Text>
         </Pressable>
 
         {/* Center: Camp Logo Standout Button */}
@@ -205,25 +217,31 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         {/* Tab 3: Setting */}
         <Pressable
           style={styles.tabButton}
-          onPress={() => handleTabPress(2, 'setting', state.index === 2)}
+          onPress={() => handleTabPress(settingIndex, 'setting', state.index === settingIndex)}
         >
           <MaterialIcons
             name="settings"
-            size={26}
-            color={state.index === 2 ? activeColors.tint : activeColors.tabIconDefault}
+            size={23}
+            color={state.index === settingIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === settingIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Settings
+          </Text>
         </Pressable>
 
         {/* Tab 4: Profile */}
         <Pressable
           style={styles.tabButton}
-          onPress={() => handleTabPress(3, 'profile', state.index === 3)}
+          onPress={() => handleTabPress(profileIndex, 'profile', state.index === profileIndex)}
         >
           <MaterialIcons
             name="person"
-            size={26}
-            color={state.index === 3 ? activeColors.tint : activeColors.tabIconDefault}
+            size={23}
+            color={state.index === profileIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === profileIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Profile
+          </Text>
         </Pressable>
       </View>
     </>
@@ -322,5 +340,10 @@ const styles = StyleSheet.create({
   centerButtonActive: {
     transform: [{ scale: 0.95 }],
     opacity: 0.9,
+  },
+  tabLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    marginTop: 3,
   },
 });

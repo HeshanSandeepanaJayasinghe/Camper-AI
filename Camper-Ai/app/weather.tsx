@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   locationChip: { borderWidth: 1, borderRadius: 16, paddingHorizontal: 14, paddingVertical: 10, maxWidth: 190 },
   currentCard: { minHeight: 116, borderWidth: 1, borderRadius: 22, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14 },
   condition: { marginTop: 4 },
-  temp: { fontSize: 30, fontWeight: '900' },
+  temp: { fontSize: 30, fontWeight: '900', lineHeight: 36 },
   forecastList: { gap: 12 },
   forecastRow: { borderWidth: 1, borderRadius: 16, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
 });

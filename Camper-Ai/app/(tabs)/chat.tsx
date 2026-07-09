@@ -76,6 +76,7 @@ export default function ChatScreen() {
           onChangeText={setDraft}
           placeholder="Type your question..."
           placeholderTextColor={colors.tabIconDefault}
+          multiline
           style={[styles.input, { color: colors.text, backgroundColor: 'transparent' }]}
         />
         <Pressable 
@@ -123,12 +124,14 @@ const styles = StyleSheet.create({
   inputBarContainer: {
     flexDirection: 'row',
     gap: 10,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     borderRadius: 12,
     padding: 6,
   },
   input: {
     flex: 1,
+    minHeight: 42,
+    maxHeight: 110,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 15,

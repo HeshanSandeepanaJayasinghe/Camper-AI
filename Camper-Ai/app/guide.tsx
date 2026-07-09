@@ -91,6 +91,7 @@ export default function GuideScreen() {
               onChangeText={setDraft}
               placeholder="Ask a survival question..."
               placeholderTextColor={colors.tabIconDefault}
+              multiline
               style={[styles.askInput, { color: colors.text }]}
             />
             <Pressable style={[styles.iconButton, { backgroundColor: colors.tint }]} onPress={askGuide}>
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   tipText: { flex: 1, lineHeight: 21 },
   chatPanel: { borderWidth: 1, borderRadius: 20, padding: 16, gap: 12 },
   message: { alignSelf: 'flex-start', maxWidth: '92%', borderRadius: 14, padding: 12 },
-  askBar: { flexDirection: 'row', borderWidth: 1, borderRadius: 16, padding: 8, gap: 8, alignItems: 'center' },
-  askInput: { flex: 1, paddingHorizontal: 8, paddingVertical: 8 },
+  askBar: { flexDirection: 'row', borderWidth: 1, borderRadius: 16, padding: 8, gap: 8, alignItems: 'flex-end' },
+  askInput: { flex: 1, minHeight: 38, maxHeight: 100, paddingHorizontal: 8, paddingVertical: 8 },
   iconButton: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
 });

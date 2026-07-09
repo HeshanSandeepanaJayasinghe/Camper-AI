@@ -25,9 +25,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Ideal for fit hikers and sunrise photographers.',
     info: 'A magnificent peak standing tall over the town of Ella. The trek leads through tea estates, rail tracks, and dense eucalyptus woodlands, opening up to a cliff edge campsite with vistas of the Southern plains.',
     images: [
-      'https://images.unsplash.com/photo-1588598126744-b0db4d9154f3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1545062990-4a95e8e4b96d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1563182631-f1bfa98e3b33?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -76,9 +76,9 @@ export const sampleLocations: Location[] = [
     suitability: 'A must-visit for foggy nature trails and scenic valleys.',
     info: 'Located in the Matale district, Riverston is famous for its telecommunication tower hike, sheer windy drop-offs (Mini World\'s End), and Pitawala Pathana plains. It is exceptionally windy and mist-filled.',
     images: [
-      'https://images.unsplash.com/photo-1472214222541-d510753a4707?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1482862549707-f63cb32c5fd9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1508873696983-2df519f0397e?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -229,9 +229,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Ideal for beginners and families seeking scenic views.',
     info: 'Totupola Kanda is Sri Lanka\'s third-tallest peak, offering a relatively gentle and straightforward hike compared to other summits. The trail traverses dwarf forests and ends with sweeping views of Horton Plains plateau.',
     images: [
-      'https://images.unsplash.com/photo-1472214222541-d510753a4707?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -246,9 +246,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Perfect for panoramic photography and historic climbs.',
     info: 'This prominent flat-topped mountain closely resembles an open book. Located in Kegalle district, Bible Rock offers a steady climb through lush forests, leading to a windy, wide plateau containing panoramic views of Kadugannawa pass.',
     images: [
-      'https://images.unsplash.com/photo-1588598126744-b0db4d9154f3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -297,9 +297,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Best for heritage walks, archaeology lovers, and light hikers.',
     info: 'An ancient Buddhist monastery situated on an isolated mountain range that rises out of the dry plains. Ritual stone paths, massive step ponds, and unique climate conditions make it a mystical and historic trekking experience.',
     images: [
-      'https://images.unsplash.com/photo-1472214222541-d510753a4707?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1578345218746-50a229b3d0f8?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -314,8 +314,8 @@ export const sampleLocations: Location[] = [
     suitability: 'Ideal for nature researchers, photographers, and bird lovers.',
     info: 'The last primary tropical rainforest in Sri Lanka. It features gigantic trees, dense undergrowth, streams, and a massive percentage of endemic trees, birds, frogs, and insects. Hikers traverse canopy trails to pristine waterfalls.',
     images: [
-      'https://images.unsplash.com/photo-1588598126744-b0db4d9154f3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1543872084-c7bd3822856f?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80',
     ],
   },
@@ -365,9 +365,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Ideal for misty viewpoints and peaceful pine treks.',
     info: 'Standing on the western edge of the Knuckles Range, Hunnasgiriya offers a beautiful forest walk leading to a view over the Kandy plateau and the steep drops of the Knuckles conservation valleys.',
     images: [
-      'https://images.unsplash.com/photo-1472214222541-d510753a4707?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1542224566-6e85f2e6772f?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {
@@ -416,9 +416,9 @@ export const sampleLocations: Location[] = [
     suitability: 'Ideal for stream crossing and tropical forest campers.',
     info: 'A beautiful valley trek near Kitulgala that winds through rubber estates, streams, and secondary rainforests, leading to remote camping spots along the riverbanks.',
     images: [
-      'https://images.unsplash.com/photo-1588598126744-b0db4d9154f3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=80',
     ],
   },
   {

@@ -64,49 +64,51 @@ export default function PrepChatScreen() {
   };
 
   return (
-    <ThemedView style={[styles.root, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <ThemedText type="title" style={[styles.title, { color: colors.text }]}>Trip Preparation</ThemedText>
-        <ThemedText style={[styles.subtitle, { color: colors.mutedText }]}>
-          {locationData?.name ?? 'Build a safer camping plan'}
-        </ThemedText>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+      keyboardVerticalOffset={Platform.select({ ios: 90, android: 120 })}
+      style={{ flex: 1 }}
+    >
+      <ThemedView style={[styles.root, { backgroundColor: colors.background }]}>
+        <View style={styles.header}>
+          <ThemedText type="title" style={[styles.title, { color: colors.text }]}>Trip Preparation</ThemedText>
+          <ThemedText style={[styles.subtitle, { color: colors.mutedText }]}>
+            {locationData?.name ?? 'Build a safer camping plan'}
+          </ThemedText>
+        </View>
 
-      <ScrollView style={styles.messages} contentContainerStyle={styles.messageContent}>
-        {messages.map((message, index) => (
-          <View
-            key={`${message.from}-${index}`}
-            style={[
-              styles.bubble,
-              message.from === 'user'
-                ? [styles.userBubble, { backgroundColor: colors.tint }]
-                : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border }],
-            ]}
-          >
-            <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
-          </View>
-        ))}
-        {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
-      </ScrollView>
+        <ScrollView style={styles.messages} contentContainerStyle={styles.messageContent}>
+          {messages.map((message, index) => (
+            <View
+              key={`${message.from}-${index}`}
+              style={[
+                styles.bubble,
+                message.from === 'user'
+                  ? [styles.userBubble, { backgroundColor: colors.tint }]
+                  : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border }],
+              ]}
+            >
+              <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
+            </View>
+          ))}
+          {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
+        </ScrollView>
 
-      <KeyboardAvoidingView
-        behavior={Platform.select({ ios: 'padding', android: undefined })}
-        keyboardVerticalOffset={Platform.select({ ios: 90, android: 0 })}
-        style={[styles.inputBar, { borderColor: colors.border, backgroundColor: colors.card }]}
-      >
-        <TextInput
-          value={draft}
-          onChangeText={setDraft}
-          placeholder="Trip date, group size, gear..."
-          placeholderTextColor={colors.tabIconDefault}
-          multiline
-          style={[styles.input, { color: colors.text }]}
-        />
-        <Pressable style={[styles.sendButton, { backgroundColor: colors.tint }]} onPress={sendMessage}>
-          <MaterialIcons name="send" size={20} color="#031014" />
-        </Pressable>
-      </KeyboardAvoidingView>
-    </ThemedView>
+        <View style={[styles.inputBar, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <TextInput
+            value={draft}
+            onChangeText={setDraft}
+            placeholder="Trip date, group size, gear..."
+            placeholderTextColor={colors.tabIconDefault}
+            multiline
+            style={[styles.input, { color: colors.text }]}
+          />
+          <Pressable style={[styles.sendButton, { backgroundColor: colors.tint }]} onPress={sendMessage}>
+            <MaterialIcons name="send" size={20} color="#031014" />
+          </Pressable>
+        </View>
+      </ThemedView>
+    </KeyboardAvoidingView>
   );
 }
 

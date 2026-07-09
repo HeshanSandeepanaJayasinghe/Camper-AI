@@ -170,9 +170,12 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         >
           <MaterialIcons
             name="map"
-            size={26}
+            size={23}
             color={state.index === mapIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === mapIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Map
+          </Text>
         </Pressable>
 
         {/* Tab 2: Chat */}
@@ -182,9 +185,12 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         >
           <MaterialIcons
             name="chat-bubble-outline"
-            size={26}
+            size={23}
             color={state.index === chatIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === chatIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Chat
+          </Text>
         </Pressable>
 
         {/* Center: Camp Logo Standout Button */}
@@ -215,9 +221,12 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         >
           <MaterialIcons
             name="settings"
-            size={26}
+            size={23}
             color={state.index === settingIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === settingIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Settings
+          </Text>
         </Pressable>
 
         {/* Tab 4: Profile */}
@@ -227,9 +236,12 @@ export function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
         >
           <MaterialIcons
             name="person"
-            size={26}
+            size={23}
             color={state.index === profileIndex ? activeColors.tint : activeColors.tabIconDefault}
           />
+          <Text style={[styles.tabLabel, { color: state.index === profileIndex ? activeColors.tint : activeColors.tabIconDefault }]}>
+            Profile
+          </Text>
         </Pressable>
       </View>
     </>
@@ -328,5 +340,10 @@ const styles = StyleSheet.create({
   centerButtonActive: {
     transform: [{ scale: 0.95 }],
     opacity: 0.9,
+  },
+  tabLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    marginTop: 3,
   },
 });

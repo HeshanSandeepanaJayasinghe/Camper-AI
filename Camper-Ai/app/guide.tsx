@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import { askGemini } from '@/components/gemini';
+import { askGeminiChat } from '@/components/gemini';
 import { ThemedText } from '@/components/themed-text';
+import { FormattedText } from '@/components/FormattedText';
 import { ThemedView } from '@/components/themed-view';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
@@ -35,9 +36,8 @@ export default function GuideScreen() {
     setMessages(nextMessages);
     setDraft('');
     setLoading(true);
-    const transcript = nextMessages.map((message) => `${message.from}: ${message.text}`).join('\n');
-    const answer = await askGemini(
-      transcript,
+    const answer = await askGeminiChat(
+      nextMessages,
       'You are Camper-AI Survival Guide. Give practical, conservative outdoor safety advice for Sri Lankan camping and hiking. Keep answers concise, actionable, and include emergency caution where relevant.',
     );
     setMessages((current) => [...current, { from: 'assistant', text: answer }]);
@@ -81,7 +81,7 @@ export default function GuideScreen() {
                 { backgroundColor: message.from === 'user' ? colors.tint : theme === 'dark' ? '#1c2230' : '#f1f5f9' },
               ]}
             >
-              <ThemedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</ThemedText>
+              <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
             </View>
           ))}
           {loading && <ActivityIndicator color={colors.tint} />}

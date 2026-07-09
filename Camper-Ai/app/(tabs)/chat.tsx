@@ -1,37 +1,44 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View, ActivityIndicator } from 'react-native';
 
 import { AppShell } from '@/components/AppShell';
 import { ThemedText } from '@/components/themed-text';
+import { FormattedText } from '@/components/FormattedText';
 import { useAppContext } from '@/components/AppContext';
 import { Colors } from '@/constants/theme';
+import { askGeminiChat } from '@/components/gemini';
 
-const initialMessages = [
+type Message = {
+  from: 'assistant' | 'user';
+  text: string;
+};
+
+const initialMessages: Message[] = [
   { from: 'assistant', text: 'Hello! How can Camper-AI help you prepare today?' },
 ];
 
 export default function ChatScreen() {
   const { theme } = useAppContext();
   const colors = Colors[theme];
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [draft, setDraft] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const sendMessage = () => {
-    if (!draft.trim()) {
+  const sendMessage = async () => {
+    const text = draft.trim();
+    if (!text || loading) {
       return;
     }
 
-    setMessages((current) => [...current, { from: 'user', text: draft.trim() }]);
+    const nextMessages = [...messages, { from: 'user' as const, text }];
+    setMessages(nextMessages);
     setDraft('');
-    setTimeout(() => {
-      setMessages((current) => [
-        ...current,
-        {
-          from: 'assistant',
-          text: 'A good camping plan includes shelter, weather checks, and a small first-aid kit. Would you like top prep tips for your chosen location?',
-        },
-      ]);
-    }, 500);
+    setLoading(true);
+
+    const systemInstruction = 'You are Camper-AI, an intelligent Sri Lankan camping assistant. Help users plan hikes, suggest campsite locations, check gear lists, provide weather advice, and answer safety questions. Keep your responses structured, helpful, and concise.';
+    const answer = await askGeminiChat(nextMessages, systemInstruction);
+    setMessages((current) => [...current, { from: 'assistant', text: answer }]);
+    setLoading(false);
   };
 
   return (
@@ -51,11 +58,12 @@ export default function ChatScreen() {
                 : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }],
             ]}
           >
-            <ThemedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>
+            <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>
               {message.text}
-            </ThemedText>
+            </FormattedText>
           </View>
         ))}
+        {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
       </ScrollView>
 
       <KeyboardAvoidingView
@@ -70,7 +78,11 @@ export default function ChatScreen() {
           placeholderTextColor={colors.tabIconDefault}
           style={[styles.input, { color: colors.text, backgroundColor: 'transparent' }]}
         />
-        <Pressable style={[styles.sendButton, { backgroundColor: colors.tint }]} onPress={sendMessage}>
+        <Pressable 
+          style={[styles.sendButton, { backgroundColor: colors.tint }]} 
+          onPress={sendMessage}
+          disabled={loading}
+        >
           <ThemedText style={[styles.sendText, { color: theme === 'dark' ? '#030712' : '#ffffff', fontWeight: 'bold' }]}>
             Send
           </ThemedText>
@@ -102,6 +114,11 @@ const styles = StyleSheet.create({
   },
   assistantBubble: {
     alignSelf: 'flex-start',
+  },
+  loader: {
+    alignSelf: 'flex-start',
+    marginVertical: 6,
+    marginLeft: 12,
   },
   inputBarContainer: {
     flexDirection: 'row',

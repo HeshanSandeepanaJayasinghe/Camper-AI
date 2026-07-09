@@ -12,9 +12,10 @@ import {
 import { useLocalSearchParams } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import { askGemini } from '@/components/gemini';
+import { askGeminiChat } from '@/components/gemini';
 import { sampleLocations } from '@/components/sample-locations';
 import { ThemedText } from '@/components/themed-text';
+import { FormattedText } from '@/components/FormattedText';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useAppContext } from '@/components/AppContext';
@@ -57,8 +58,7 @@ export default function PrepChatScreen() {
     setDraft('');
     setLoading(true);
 
-    const transcript = nextMessages.map((message) => `${message.from}: ${message.text}`).join('\n');
-    const answer = await askGemini(transcript, systemInstruction);
+    const answer = await askGeminiChat(nextMessages, systemInstruction);
     setMessages((current) => [...current, { from: 'assistant', text: answer }]);
     setLoading(false);
   };
@@ -83,7 +83,7 @@ export default function PrepChatScreen() {
                 : [styles.assistantBubble, { backgroundColor: colors.card, borderColor: colors.border }],
             ]}
           >
-            <ThemedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</ThemedText>
+            <FormattedText style={{ color: message.from === 'user' ? '#031014' : colors.text }}>{message.text}</FormattedText>
           </View>
         ))}
         {loading && <ActivityIndicator color={colors.tint} style={styles.loader} />}
